@@ -1,4 +1,4 @@
-﻿using Demo.DataAccess.Models;
+﻿using Demo.DataAccess.Models.Departments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace Demo.DataAccess.Data.Configurations
 {
-    internal class DepartmentConfigurations : IEntityTypeConfiguration<Department>
+    internal class DepartmentConfigurations :BaseEntityConfiguration<Department> ,IEntityTypeConfiguration<Department>
     {
-        public void Configure(EntityTypeBuilder<Department> builder)
+        public new  void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.Property(d => d.Id).UseIdentityColumn(10, 10);
             builder.Property(d => d.Name).HasColumnType("varchar(20)");
             builder.Property(d => d.Code).HasColumnType("varchar(20)");
-            builder.Property(d => d.CreatedOn).HasDefaultValueSql("GetDate()");
-            builder.Property(d => d.LastModifiedOn).HasComputedColumnSql("GetDate()");
+            base.Configure(builder);
+
         }
     }
 }
